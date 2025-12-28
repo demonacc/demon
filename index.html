@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Demon Accounts v24</title>
+<title>Demon Accounts v25</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
@@ -12,20 +12,22 @@
 :root{
   --bg:#0a0a1e;
   --panel:#101033;
-  --panel2:#1b1b45;
-  --accent:#00ffd5;
-  --accent2:#ff2fa4;
+  --panel2:#0f1033;
+  --accent:#4da3ff;
+  --accent2:#2b7cff;
   --text:#ffffff;
   --muted:#9aa0ff;
-  --good:#4dffb3;
-  --shadow:rgba(0,255,213,.2);
+  --shadow:rgba(77,163,255,.2);
 }
 
 /* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:'Orbitron',sans-serif;
-  background:radial-gradient(circle at top,#0a0a1e,#05050f);
+  background:
+    linear-gradient(180deg,#0a0a1e,#05050f),
+    repeating-linear-gradient(0deg,transparent,transparent 30px,rgba(77,163,255,0.05) 30px,rgba(77,163,255,0.05) 31px),
+    repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(77,163,255,0.05) 30px,rgba(77,163,255,0.05) 31px);
   color:var(--text);
   overflow-x:hidden;
 }
@@ -41,7 +43,6 @@ header h1{
   -webkit-background-clip:text;
   color:transparent;
   text-shadow:0 0 20px var(--accent);
-  animation:glow 2s infinite alternate;
 }
 header p{
   margin-top:15px;
@@ -51,10 +52,10 @@ header p{
 
 /* PRODUCT GRID */
 .products{
-  max-width:1200px;
+  max-width:1400px;
   margin:0 auto 80px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:repeat(4,1fr);
   gap:30px;
   padding:0 20px;
 }
@@ -62,20 +63,19 @@ header p{
 /* PRODUCT CARD */
 .product{
   background:linear-gradient(180deg,var(--panel),var(--panel2));
-  border-radius:24px;
-  padding:30px;
+  border-radius:20px;
+  padding:25px;
   text-align:center;
   border:1px solid rgba(255,255,255,.06);
   box-shadow:0 0 20px var(--shadow);
   transition:.5s;
-  cursor:pointer;
 }
 .product:hover{
-  transform:translateY(-12px) scale(1.03);
-  box-shadow:0 0 50px var(--accent);
+  transform:translateY(-10px) scale(1.03);
+  box-shadow:0 0 50px var(--accent2);
 }
 .product img{
-  width:120px;
+  width:100px;
   margin-bottom:20px;
 }
 .product h3{
@@ -96,12 +96,12 @@ header p{
   cursor:pointer;
   background:linear-gradient(90deg,var(--accent),var(--accent2));
   color:#000;
-  box-shadow:0 0 25px var(--accent);
+  box-shadow:0 0 20px var(--accent);
   transition:.3s;
 }
 .buy-btn:hover{
   transform:scale(1.05);
-  box-shadow:0 0 45px var(--accent2);
+  box-shadow:0 0 35px var(--accent2);
 }
 
 /* CHECKOUT DRAWER */
@@ -151,8 +151,8 @@ header p{
 }
 .badge{
   display:inline-block;
-  background:var(--good);
-  color:#02140b;
+  background:var(--accent);
+  color:#000;
   padding:8px 18px;
   border-radius:20px;
   font-weight:900;
@@ -165,10 +165,6 @@ header p{
   from{opacity:0; transform:translateY(30px);}
   to{opacity:1; transform:translateY(0);}
 }
-@keyframes glow{
-  from{text-shadow:0 0 10px var(--accent);}
-  to{text-shadow:0 0 30px var(--accent2);}
-}
 </style>
 </head>
 <body>
@@ -179,10 +175,9 @@ header p{
 </header>
 
 <section class="products" id="productGrid">
-  <!-- Products will be injected here dynamically -->
+  <!-- Products injected here -->
 </section>
 
-<!-- CHECKOUT DRAWER -->
 <div class="checkout" id="checkout">
   <h2 id="checkoutTitle">Checkout</h2>
   <input id="email" placeholder="Delivery Email">
@@ -193,7 +188,6 @@ header p{
   <div id="paypal" style="margin-top:25px;"></div>
 </div>
 
-<!-- RECEIPT -->
 <div class="receipt" id="invoice">
   <span class="badge">PAYMENT CONFIRMED</span>
   <h2>Receipt</h2>
@@ -201,16 +195,14 @@ header p{
 </div>
 
 <script>
-// PRODUCTS ARRAY
+// PRODUCTS
 const products = [
   {name:"Fortnite Accounts [PICAXES]", price:"6.55", img:"assets/pick.png"},
   {name:"Valorant Account", price:"19.99", img:"assets/val.png"},
-  {name:"30+ Skin Account", price:"0.01", img:"assets/skin.png"},
-  {name:"Minecraft Premium", price:"15.99", img:"assets/mc.png"},
-  {name:"Roblox Premium", price:"4.99", img:"assets/roblox.png"}
+  {name:"30+ Skin Account", price:"0.01", img:"assets/skin.png"}
 ];
 
-// DISCORD WEBHOOKS
+// WEBHOOKS
 const NORMAL_WEBHOOK="https://discord.com/api/webhooks/1454830269562617866/1-uQDnN7DjK4gFrXGbtt4T8NBtfqIX3VCADJ3e34GaT12OsTO58_jEjK7z8M-lZhCOSD";
 const ADMIN_WEBHOOK="https://discord.com/api/webhooks/1454906316374933658/2RLeU2dOrrLGBb-DxiW2TpffrCOPcze-CiIwHNXQPc6I9-M5r5J0Zpr2EbOrzdLwzVl4";
 
@@ -226,11 +218,10 @@ const delivery = document.getElementById("delivery");
 
 let product="", price="", invoiceID="";
 
-// GENERATE INVOICE
 function generateInvoice(){ return "INV-"+Math.random().toString(36).substr(2,8).toUpperCase(); }
 
 // RENDER PRODUCTS
-products.forEach((p,i)=>{
+products.forEach((p)=>{
   const card = document.createElement("div");
   card.classList.add("product");
   card.innerHTML=`
@@ -244,45 +235,38 @@ products.forEach((p,i)=>{
 
 // OPEN CHECKOUT
 function openCheckout(p, pr){
-  product = p; price = pr; invoiceID = generateInvoice();
-  checkoutTitle.innerText = `${p} – $${pr}`;
+  product=p; price=pr; invoiceID=generateInvoice();
+  checkoutTitle.innerText=`${p} – $${pr}`;
   checkout.classList.add("show");
-  paypalDiv.innerHTML = "";
+  paypalDiv.innerHTML="";
 
   paypal.Buttons({
     style:{layout:'vertical',color:'blue',shape:'pill',label:'paypal'},
-    createOrder:(data, actions)=>{
-      return actions.order.create({
-        purchase_units:[{description:product, amount:{value:price}}]
-      });
-    },
-    onApprove:(data, actions)=>{
-      return actions.order.capture().then(details=>{
-        checkout.classList.remove("show");
-        productGrid.style.display="none";
-        invoice.style.display="block";
-        invoiceText.innerHTML = `
-          <b>Product:</b> ${product}<br>
-          <b>Price:</b> $${price}<br>
-          <b>Delivery:</b> ${delivery.value}<br>
-          <b>Email:</b> ${email.value}`;
-
-        sendWebhook(details.payer.email_address);
-      });
-    },
+    createOrder:(data,actions)=>actions.order.create({purchase_units:[{description:product, amount:{value:price}}]}),
+    onApprove:(data, actions)=>actions.order.capture().then(details=>{
+      checkout.classList.remove("show");
+      productGrid.style.display="none";
+      invoice.style.display="block";
+      invoiceText.innerHTML=`
+        <b>Product:</b> ${product}<br>
+        <b>Price:</b> $${price}<br>
+        <b>Delivery:</b> ${delivery.value}<br>
+        <b>Email:</b> ${email.value}`;
+      sendWebhook(details.payer.email_address);
+    }),
     onCancel:()=>alert('Payment canceled.'),
     onError:(err)=>{alert('Payment error'); console.error(err);}
   }).render("#paypal");
 }
 
-// SEND DISCORD WEBHOOK
+// SEND WEBHOOK
 function sendWebhook(buyer){
   fetch(NORMAL_WEBHOOK,{
     method:"POST",
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({embeds:[{
       title:"💰 PayPal Order",
-      color:0x00ffd5,
+      color:0x4da3ff,
       fields:[
         {name:"Product",value:product},
         {name:"Price",value:`$${price}`},
@@ -297,7 +281,7 @@ function sendWebhook(buyer){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({embeds:[{
       title:"ADMIN ORDER",
-      color:0xff2fa4,
+      color:0x2b7cff,
       fields:[
         {name:"Invoice ID",value:invoiceID},
         {name:"Product",value:product},
@@ -310,5 +294,6 @@ function sendWebhook(buyer){
   });
 }
 </script>
+
 </body>
 </html>
