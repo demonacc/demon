@@ -7,249 +7,270 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-<!-- PAYPAL SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=Abqeni29Ax1nQYeBcP8lEUsd__MoahXx8o65tgOoYHe3oJmq80vd7zJQ5cnrLPqdwUutGkpRfLZYPnHz&currency=USD&intent=capture"></script>
 
 <style>
+/* ================= ROOT THEMES ================= */
 :root{
   --bg:#07090f;
   --panel:#0f1324;
   --glass:rgba(255,255,255,.08);
   --stroke:rgba(255,255,255,.14);
-  --neon:#6cf3ff;
-  --pink:#ff4ecd;
-  --green:#33ff99;
-  --text:#ffffff;
+  --accent:#6cf3ff;
+  --accent2:#ff4ecd;
+  --good:#33ff99;
+  --text:#fff;
   --muted:#9aa4ff;
 }
+[data-theme="blue"]{
+  --accent:#4ea8ff;
+  --accent2:#6cf3ff;
+}
+[data-theme="neon"]{
+  --accent:#33ff99;
+  --accent2:#fffb00;
+}
 
+/* ================= BASE ================= */
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:"Space Grotesk",sans-serif;
-  background:
-    radial-gradient(circle at 20% 10%,#1b2b6f,transparent 40%),
-    radial-gradient(circle at 80% 90%,#5b146d,transparent 40%),
-    linear-gradient(180deg,#05070c,#07090f);
+  background:linear-gradient(180deg,#05070c,var(--bg));
   color:var(--text);
   min-height:100vh;
   overflow-x:hidden;
 }
 
-/* FLOATING GRID */
-body::before{
-  content:"";
+/* ================= SIDEBAR ================= */
+.sidebar{
   position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-  background-size:60px 60px;
-  pointer-events:none;
-  mask-image:radial-gradient(circle at center,black 30%,transparent 80%);
+  left:0;
+  top:0;
+  height:100%;
+  width:260px;
+  background:var(--panel);
+  border-right:1px solid var(--stroke);
+  padding:30px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  transform:translateX(0);
+  transition:.5s;
+  z-index:50;
 }
-
-/* HEADER */
-.hero{
-  text-align:center;
-  padding:90px 20px 60px;
-}
-.hero h1{
-  font-size:4rem;
+.logo{
+  font-size:1.8rem;
   font-weight:900;
-  background:linear-gradient(90deg,var(--neon),var(--pink),var(--green));
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
   -webkit-background-clip:text;
   color:transparent;
 }
-.hero p{
-  margin-top:14px;
-  color:var(--muted);
-  font-size:1.2rem;
-}
-
-/* STORE GRID */
-.store{
-  max-width:1200px;
-  margin:auto;
-  padding:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-}
-
-.card{
+.nav button{
+  background:none;
+  border:none;
+  color:var(--text);
+  padding:14px;
+  border-radius:14px;
+  font-weight:700;
+  text-align:left;
+  cursor:pointer;
   position:relative;
-  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
-  border:1px solid var(--stroke);
-  border-radius:26px;
-  padding:26px;
-  backdrop-filter:blur(18px);
-  transition:.5s;
-  overflow:hidden;
+  transition:.3s;
 }
-.card::after{
+.nav button.active,
+.nav button:hover{
+  background:var(--glass);
+  box-shadow:0 0 20px rgba(108,243,255,.25);
+}
+.nav button::after{
   content:"";
   position:absolute;
-  inset:-1px;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.25),transparent);
-  opacity:0;
+  left:0;
+  top:50%;
+  width:4px;
+  height:0;
+  background:linear-gradient(var(--accent),var(--accent2));
+  transition:.3s;
+}
+.nav button.active::after{
+  height:60%;
+  top:20%;
+}
+
+/* ================= MAIN ================= */
+.main{
+  margin-left:260px;
+  padding:30px;
   transition:.5s;
 }
+
+/* ================= PAGES ================= */
+.page{
+  display:none;
+  animation:fade .5s ease;
+}
+.page.active{display:block}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1}
+}
+
+/* ================= STORE ================= */
+.store{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:25px;
+}
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
+  border:1px solid var(--stroke);
+  border-radius:24px;
+  padding:24px;
+  backdrop-filter:blur(16px);
+  transition:.4s;
+}
 .card:hover{
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:0 30px 80px rgba(108,243,255,.35);
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 25px 80px rgba(108,243,255,.35);
 }
-.card:hover::after{opacity:1}
-
-.card img{
-  width:64px;
-  margin-bottom:18px;
-}
-.card h3{
-  font-size:1.3rem;
-  margin-bottom:6px;
-}
-.card span{
-  color:var(--muted);
-  font-size:.9rem;
-}
-
+.card img{width:60px}
+.card h3{margin-top:10px}
+.card span{color:var(--muted);font-size:.9rem}
 .price{
-  margin:18px 0;
-  font-size:2rem;
+  font-size:1.8rem;
   font-weight:900;
-  background:linear-gradient(90deg,var(--green),var(--neon));
+  margin:16px 0;
+  background:linear-gradient(90deg,var(--good),var(--accent));
   -webkit-background-clip:text;
   color:transparent;
 }
-
 .buy{
   width:100%;
   padding:14px;
   border:none;
-  border-radius:16px;
+  border-radius:14px;
   font-weight:800;
   cursor:pointer;
-  background:linear-gradient(90deg,var(--neon),var(--pink));
-  color:#000;
-  transition:.3s;
-}
-.buy:hover{
-  box-shadow:0 0 40px rgba(255,78,205,.6);
-  transform:scale(1.05);
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
 }
 
-/* CHECKOUT DRAWER */
+/* ================= CHECKOUT ================= */
 .checkout{
   position:fixed;
   right:0;
   top:0;
   height:100%;
-  width:420px;
+  width:380px;
   background:var(--panel);
   border-left:1px solid var(--stroke);
   padding:30px;
   transform:translateX(100%);
   transition:.5s;
-  z-index:20;
+  z-index:100;
 }
 .checkout.show{transform:none}
-
-.checkout h2{margin-bottom:20px}
 .checkout input,select{
   width:100%;
   padding:14px;
-  border-radius:14px;
-  border:none;
-  background:#090c1a;
-  color:#fff;
-  margin-bottom:14px;
-}
-
-/* INVOICE */
-.invoice{
-  display:none;
-  max-width:640px;
-  margin:80px auto;
-  background:var(--panel);
-  border:1px solid var(--stroke);
-  border-radius:26px;
-  padding:30px;
-  animation:fadeUp .6s ease;
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1}
-}
-.badge{
-  display:inline-block;
-  background:linear-gradient(90deg,var(--green),var(--neon));
-  padding:6px 14px;
-  border-radius:20px;
-  font-weight:900;
-  font-size:.75rem;
   margin-bottom:12px;
+  border-radius:12px;
+  border:none;
+  background:#080b18;
+  color:#fff;
 }
 
-/* ADMIN */
-.admin{
-  display:none;
-  max-width:600px;
-  margin:60px auto;
+/* ================= ORDERS ================= */
+.order{
   background:var(--panel);
   border:1px solid var(--stroke);
-  border-radius:26px;
-  padding:30px;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+  animation:pop .4s ease;
 }
-.admin button{
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border:none;
-  border-radius:14px;
-  font-weight:800;
-  cursor:pointer;
+@keyframes pop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1)}
 }
-.refund{background:linear-gradient(90deg,#ff4e4e,#ff9b4e)}
-.resend{background:linear-gradient(90deg,var(--neon),var(--green))}
+
+/* ================= SETTINGS ================= */
+.setting{
+  margin-bottom:20px;
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+  }
+  .sidebar.show{
+    transform:none;
+  }
+  .main{
+    margin-left:0;
+  }
+}
 </style>
 </head>
 
-<body>
+<body data-theme="dark">
 
-<section class="hero">
-  <h1>Demon Accounts</h1>
-  <p>High-Tier Accounts · Instant Delivery · Secure Checkout</p>
-</section>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="logo">DEMON</div>
+  <div class="nav">
+    <button class="active" onclick="openPage('store')">🛒 Store</button>
+    <button onclick="openPage('orders')">📜 Orders</button>
+    <button onclick="openPage('settings')">⚙ Settings</button>
+  </div>
+</div>
 
-<section class="store" id="store">
-  <div class="card">
-    <img src="assets/pick.png">
-    <h3>Fortnite Account</h3>
-    <span>Rare Cosmetics</span>
-    <div class="price">$6.55</div>
-    <button class="buy" onclick="checkoutOpen('Fortnite Account','6.55')">Buy Now</button>
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STORE -->
+  <div class="page active" id="store">
+    <h2>Store</h2><br>
+    <div class="store">
+      <div class="card">
+        <img src="assets/pick.png">
+        <h3>Fortnite Account</h3>
+        <span>Rare Cosmetics</span>
+        <div class="price">$6.55</div>
+        <button class="buy" onclick="openCheckout('Fortnite Account','6.55')">Buy</button>
+      </div>
+      <div class="card">
+        <img src="assets/val.png">
+        <h3>Valorant Account</h3>
+        <span>Ranked Ready</span>
+        <div class="price">$19.99</div>
+        <button class="buy" onclick="openCheckout('Valorant Account','19.99')">Buy</button>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <img src="assets/val.png">
-    <h3>Valorant Account</h3>
-    <span>Ranked Ready</span>
-    <div class="price">$19.99</div>
-    <button class="buy" onclick="checkoutOpen('Valorant Account','19.99')">Buy Now</button>
+  <!-- ORDERS -->
+  <div class="page" id="orders">
+    <h2>Your Orders</h2><br>
+    <div id="orderList"></div>
   </div>
 
-  <div class="card">
-    <img src="assets/skin.png">
-    <h3>30+ Skin Account</h3>
-    <span>Instant Access</span>
-    <div class="price">$2.99</div>
-    <button class="buy" onclick="checkoutOpen('30+ Skin Account','2.99')">Buy Now</button>
+  <!-- SETTINGS -->
+  <div class="page" id="settings">
+    <h2>Settings</h2><br>
+    <div class="setting">
+      <label>Theme</label><br><br>
+      <button onclick="setTheme('dark')">Dark</button>
+      <button onclick="setTheme('blue')">Blue</button>
+      <button onclick="setTheme('neon')">Neon</button>
+    </div>
   </div>
-</section>
+
+</div>
 
 <!-- CHECKOUT -->
 <div class="checkout" id="checkout">
-  <h2 id="checkoutTitle"></h2>
+  <h2 id="checkoutTitle"></h2><br>
   <input id="email" placeholder="Delivery Email">
   <select id="delivery">
     <option>Email Delivery</option>
@@ -258,83 +279,60 @@ body::before{
   <div id="paypal"></div>
 </div>
 
-<!-- INVOICE -->
-<div class="invoice" id="invoice">
-  <span class="badge">PAYMENT COMPLETE</span>
-  <h2>Invoice</h2>
-  <p id="invoiceText"></p>
-</div>
-
-<!-- ADMIN -->
-<div class="admin" id="admin">
-  <h2>Admin Panel</h2>
-  <button class="refund" onclick="adminAction('Refund Requested')">Refund</button>
-  <button class="resend" onclick="adminAction('Resend Delivery')">Resend Delivery</button>
-</div>
-
 <script>
 let product="",price="",orderID="";
 
-function genOrder(){
-  return "DA-"+Math.random().toString(36).substr(2,9).toUpperCase();
+function openPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
 }
 
-function checkoutOpen(p,pr){
-  product=p; price=pr; orderID=genOrder();
+function setTheme(t){
+  document.body.dataset.theme=t;
+  localStorage.setItem("theme",t);
+}
+
+function openCheckout(p,pr){
+  product=p; price=pr;
+  orderID="DA-"+Math.random().toString(36).substr(2,8).toUpperCase();
   checkoutTitle.innerText=`${p} – $${pr}`;
   checkout.classList.add("show");
   paypal.innerHTML="";
-
   paypal.Buttons({
-    createOrder:(d,a)=>a.order.create({
-      purchase_units:[{amount:{value:price}}]
-    }),
-    onApprove:(d,a)=>a.order.capture().then(details=>{
+    createOrder:(d,a)=>a.order.create({purchase_units:[{amount:{value:price}}]}),
+    onApprove:(d,a)=>a.order.capture().then(()=>{
+      saveOrder();
       checkout.classList.remove("show");
-      store.style.display="none";
-      invoice.style.display="block";
-      invoiceText.innerHTML=
-        `<b>Order ID:</b> ${orderID}<br>
-         <b>Product:</b> ${product}<br>
-         <b>Delivery:</b> ${delivery.value}<br>
-         <b>Email:</b> ${email.value}`;
-      logOrder(details.payer.email_address);
+      openPage("orders");
+      loadOrders();
     })
   }).render("#paypal");
 }
 
-function logOrder(buyer){
-  fetch("https://discord.com/api/webhooks/1454906316374933658/2RLeU2dOrrLGBb-DxiW2TpffrCOPcze-CiIwHNXQPc6I9-M5r5J0Zpr2EbOrzdLwzVl4",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      embeds:[{
-        title:"💳 New Order",
-        color:0x6cf3ff,
-        fields:[
-          {name:"Order ID",value:orderID},
-          {name:"Product",value:product},
-          {name:"Price",value:`$${price}`},
-          {name:"Buyer",value:buyer}
-        ]
-      }]
-    })
+function saveOrder(){
+  let orders=JSON.parse(localStorage.getItem("orders")||"[]");
+  orders.push({id:orderID,product,price,date:new Date().toLocaleString()});
+  localStorage.setItem("orders",JSON.stringify(orders));
+}
+
+function loadOrders(){
+  let list=document.getElementById("orderList");
+  list.innerHTML="";
+  let orders=JSON.parse(localStorage.getItem("orders")||"[]");
+  orders.reverse().forEach(o=>{
+    list.innerHTML+=`
+      <div class="order">
+        <b>${o.product}</b><br>
+        Order ID: ${o.id}<br>
+        $${o.price} · ${o.date}
+      </div>`;
   });
 }
 
-function adminAction(type){
-  fetch("https://discord.com/api/webhooks/1454906316374933658/2RLeU2dOrrLGBb-DxiW2TpffrCOPcze-CiIwHNXQPc6I9-M5r5J0Zpr2EbOrzdLwzVl4",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({content:`🔧 ADMIN ACTION\n${type}\nOrder: ${orderID}`})
-  });
-}
-
-document.addEventListener("keydown",e=>{
-  if(e.ctrlKey && e.shiftKey && e.key==="A"){
-    admin.style.display="block";
-  }
-});
+loadOrders();
+if(localStorage.theme)setTheme(localStorage.theme);
 </script>
 
 </body>
