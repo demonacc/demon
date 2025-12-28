@@ -5,113 +5,110 @@
 <title>Demon Accounts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-<!-- PAYPAL SDK (UNCHANGED SYSTEM) -->
-<script src="https://www.paypal.com/sdk/js?client-id=Abqeni29Ax1nQYeBcP8lEUsd__MoahXx8o65tgOoYHe3oJmq80vd7zJQ5cnrLPqdwUutGkpRfLZYPnHz&currency=USD"></script>
+<!-- PAYPAL SDK (REAL CLIENT ID) -->
+<script src="https://www.paypal.com/sdk/js?client-id=Abqeni29Ax1nQYeBcP8lEUsd__MoahXx8o65tgOoYHe3oJmq80vd7zJQ5cnrLPqdwUutGkpRfLZYPnHz&currency=USD&intent=capture"></script>
 
 <style>
 :root{
-  --bg:#06060d;
-  --panel:#0c1020;
-  --card:#101530;
-  --accent:#7c6cff;
-  --accent2:#4ea8ff;
-  --accent3:#ff4ecd;
-  --text:#ffffff;
-  --muted:#aab1ff;
+  --bg:#0e0f1a;
+  --card:#16182b;
   --border:rgba(255,255,255,.12);
+  --pink:#ff4ecd;
+  --blue:#4ea8ff;
+  --green:#2dff88;
+  --yellow:#ffd84e;
+  --text:#ffffff;
+  --muted:#b6c0ff;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  font-family:Poppins,sans-serif;
+  font-family:Inter,sans-serif;
   background:
-    radial-gradient(circle at 20% 20%,#1b1f5a,transparent 45%),
-    radial-gradient(circle at 80% 30%,#5a155a,transparent 45%),
-    linear-gradient(180deg,#03040a,#06060d);
+    radial-gradient(circle at top left,#40207a,transparent 40%),
+    radial-gradient(circle at bottom right,#004d7a,transparent 40%),
+    linear-gradient(180deg,#070912,#0e0f1a);
   color:var(--text);
   min-height:100vh;
   overflow-x:hidden;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{
-  text-align:center;
   padding:60px 20px 30px;
+  text-align:center;
 }
 header h1{
   font-size:3.5rem;
-  background:linear-gradient(90deg,var(--accent3),var(--accent2),var(--accent));
+  font-weight:900;
+  background:linear-gradient(90deg,var(--pink),var(--blue),var(--green));
   -webkit-background-clip:text;
   color:transparent;
 }
 header p{
-  margin-top:10px;
   color:var(--muted);
+  margin-top:12px;
+  font-size:1.1rem;
 }
 
-/* ===== PRODUCT GRID ===== */
+/* STORE */
 .store{
-  max-width:1200px;
-  margin:60px auto;
-  padding:0 20px;
+  max-width:1100px;
+  margin:40px auto;
+  padding:20px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:30px;
 }
-
 .product{
-  background:linear-gradient(180deg,rgba(255,255,255,.06),transparent);
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent);
   border:1px solid var(--border);
   border-radius:22px;
-  padding:28px;
-  position:relative;
-  overflow:hidden;
+  padding:26px;
+  display:grid;
+  grid-template-columns:auto 1fr auto auto;
+  align-items:center;
+  gap:20px;
+  backdrop-filter:blur(18px);
   transition:.4s;
 }
-.product::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:linear-gradient(120deg,transparent,var(--accent),transparent);
-  opacity:.15;
-}
 .product:hover{
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:0 0 60px rgba(124,108,255,.45);
+  transform:translateY(-6px) scale(1.01);
+  box-shadow:0 20px 60px rgba(78,168,255,.35);
+}
+.product img{
+  width:70px;
 }
 .product h3{
-  font-size:1.3rem;
+  font-size:1.2rem;
 }
 .product small{
   color:var(--muted);
 }
 .price{
-  font-size:2rem;
-  font-weight:700;
-  margin:20px 0;
-  background:linear-gradient(90deg,var(--accent2),var(--accent));
+  font-size:1.5rem;
+  font-weight:800;
+  background:linear-gradient(90deg,var(--green),var(--blue));
   -webkit-background-clip:text;
   color:transparent;
 }
 .buy{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  font-size:1rem;
-  font-weight:600;
+  background:linear-gradient(90deg,var(--blue),var(--pink));
   color:#fff;
+  border:none;
+  padding:14px 20px;
+  border-radius:14px;
   cursor:pointer;
-  background:linear-gradient(90deg,var(--accent3),var(--accent2));
+  font-weight:700;
   transition:.3s;
 }
 .buy:hover{
-  box-shadow:0 0 25px rgba(255,78,205,.6);
+  transform:scale(1.05);
+  box-shadow:0 0 30px rgba(255,78,205,.6);
 }
 
-/* ===== CHECKOUT MODAL ===== */
+/* MODAL */
 .modal{
   position:fixed;
   inset:0;
@@ -122,11 +119,11 @@ header p{
   z-index:10;
 }
 .modal-box{
-  width:420px;
-  background:var(--panel);
-  border:1px solid var(--border);
+  background:var(--card);
   border-radius:22px;
+  border:1px solid var(--border);
   padding:30px;
+  width:420px;
   animation:pop .4s ease;
 }
 @keyframes pop{
@@ -134,63 +131,67 @@ header p{
   to{transform:scale(1);opacity:1}
 }
 .modal-box h2{
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 input,select{
   width:100%;
   padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#070a18;
-  color:#fff;
   margin-bottom:12px;
+  border-radius:12px;
+  border:none;
+  background:#0f1224;
+  color:#fff;
 }
 
-/* ===== INVOICE ===== */
+/* INVOICE */
 .invoice{
   display:none;
   max-width:620px;
-  margin:100px auto;
+  margin:60px auto;
   background:var(--card);
   border-radius:22px;
+  padding:30px;
   border:1px solid var(--border);
-  padding:35px;
-  text-align:center;
-  animation:fade .6s;
+  animation:fade .5s ease;
 }
 @keyframes fade{
-  from{opacity:0;transform:translateY(20px)}
+  from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:none}
+}
+.invoice h2{
+  margin-bottom:14px;
 }
 .badge{
   display:inline-block;
-  padding:8px 14px;
+  background:linear-gradient(90deg,var(--green),var(--yellow));
+  padding:6px 12px;
   border-radius:20px;
-  background:linear-gradient(90deg,#2dff88,#4ea8ff);
-  color:#000;
+  font-size:.75rem;
   font-weight:700;
-  margin-bottom:15px;
+  margin-bottom:12px;
 }
 
-/* ===== ADMIN ===== */
+/* ADMIN */
 .admin{
   display:none;
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:var(--panel);
+  max-width:600px;
+  margin:60px auto;
+  background:var(--card);
+  border-radius:22px;
+  padding:30px;
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
 }
 .admin button{
   width:100%;
-  padding:10px;
-  margin-top:8px;
+  padding:12px;
+  margin-top:10px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
+  font-weight:700;
   cursor:pointer;
 }
+.refund{background:linear-gradient(90deg,#ff4e4e,#ff9b4e)}
+.resend{background:linear-gradient(90deg,var(--blue),var(--green))}
 </style>
 </head>
 
@@ -198,30 +199,39 @@ input,select{
 
 <header>
   <h1>Demon Accounts</h1>
-  <p>Instant Delivery · Secure Payments · Premium Accounts</p>
+  <p>Instant Delivery · Secure PayPal · Premium Accounts</p>
 </header>
 
 <section class="store" id="store">
 
   <div class="product">
-    <h3>Fortnite Account</h3>
-    <small>Rare Pickaxes + Skins</small>
+    <img src="assets/pick.png">
+    <div>
+      <h3>Fortnite Account</h3>
+      <small>Rare Pickaxes</small>
+    </div>
     <div class="price">$6.55</div>
-    <button class="buy" onclick="openCheckout('Fortnite Account','6.55')">Purchase</button>
+    <button class="buy" onclick="openCheckout('Fortnite Account','6.55')">Buy</button>
   </div>
 
   <div class="product">
-    <h3>OG Fortnite Account</h3>
-    <small>Season 1–3 Exclusives</small>
-    <div class="price">$14.99</div>
-    <button class="buy" onclick="openCheckout('OG Fortnite Account','14.99')">Purchase</button>
+    <img src="assets/val.png">
+    <div>
+      <h3>Valorant Account</h3>
+      <small>Ranked Ready</small>
+    </div>
+    <div class="price">$19.99</div>
+    <button class="buy" onclick="openCheckout('Valorant Account','19.99')">Buy</button>
   </div>
 
   <div class="product">
-    <h3>Stacked Fortnite Account</h3>
-    <small>150+ Skins · Max Cosmetics</small>
-    <div class="price">$29.99</div>
-    <button class="buy" onclick="openCheckout('Stacked Fortnite Account','29.99')">Purchase</button>
+    <img src="assets/skin.png">
+    <div>
+      <h3>30+ Skin Account</h3>
+      <small>Instant Access</small>
+    </div>
+    <div class="price">$2.99</div>
+    <button class="buy" onclick="openCheckout('30+ Skin Account','2.99')">Buy</button>
   </div>
 
 </section>
@@ -241,16 +251,16 @@ input,select{
 
 <!-- INVOICE -->
 <div class="invoice" id="invoice">
-  <span class="badge">PAYMENT COMPLETE</span>
-  <h2>Thank You</h2>
+  <span class="badge">PAID</span>
+  <h2>Invoice</h2>
   <p id="invoiceText"></p>
 </div>
 
 <!-- ADMIN -->
 <div class="admin" id="admin">
-  <strong>Admin Panel</strong>
-  <button onclick="adminAction('Refund')">Refund</button>
-  <button onclick="adminAction('Resend')">Resend Delivery</button>
+  <h2>Admin Panel</h2>
+  <button class="refund" onclick="adminAction('Refund Requested')">Refund</button>
+  <button class="resend" onclick="adminAction('Resend Delivery')">Resend Delivery</button>
 </div>
 
 <script>
@@ -261,8 +271,10 @@ function genOrder(){
 }
 
 function openCheckout(p,pr){
-  product=p; price=pr; orderID=genOrder();
-  checkoutTitle.innerText=`${p} — $${pr}`;
+  product=p;
+  price=pr;
+  orderID=genOrder();
+  checkoutTitle.innerText=`${p} – $${pr}`;
   checkout.style.display="flex";
   paypal.innerHTML="";
 
@@ -270,21 +282,36 @@ function openCheckout(p,pr){
     createOrder:(d,a)=>a.order.create({
       purchase_units:[{amount:{value:price}}]
     }),
-    onApprove:(d,a)=>a.order.capture().then(()=>{
+    onApprove:(d,a)=>a.order.capture().then(details=>{
       checkout.style.display="none";
       store.style.display="none";
       invoice.style.display="block";
-      invoiceText.innerHTML=`Order ID: <b>${orderID}</b><br>${product}`;
-      logOrder();
+      invoiceText.innerHTML=
+        `<b>Order ID:</b> ${orderID}<br>
+         <b>Product:</b> ${product}<br>
+         <b>Delivery:</b> ${delivery.value}<br>
+         <b>Email:</b> ${email.value}`;
+      logOrder(details.payer.email_address);
     })
   }).render("#paypal");
 }
 
-function logOrder(){
+function logOrder(buyer){
   fetch("https://discord.com/api/webhooks/1454906316374933658/2RLeU2dOrrLGBb-DxiW2TpffrCOPcze-CiIwHNXQPc6I9-M5r5J0Zpr2EbOrzdLwzVl4",{
     method:"POST",
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({content:`🧾 NEW ORDER\n${orderID}\n${product} $${price}`})
+    body:JSON.stringify({
+      embeds:[{
+        title:"🧾 New Order",
+        color:0x4ea8ff,
+        fields:[
+          {name:"Order ID",value:orderID},
+          {name:"Product",value:product},
+          {name:"Price",value:`$${price}`},
+          {name:"Buyer",value:buyer}
+        ]
+      }]
+    })
   });
 }
 
@@ -292,12 +319,12 @@ function adminAction(type){
   fetch("https://discord.com/api/webhooks/1454906316374933658/2RLeU2dOrrLGBb-DxiW2TpffrCOPcze-CiIwHNXQPc6I9-M5r5J0Zpr2EbOrzdLwzVl4",{
     method:"POST",
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({content:`🔧 ADMIN ACTION\n${type}\nOrder ${orderID}`})
+    body:JSON.stringify({content:`🔧 ADMIN ACTION\n${type}\nOrder: ${orderID}`})
   });
 }
 
 document.addEventListener("keydown",e=>{
-  if(e.ctrlKey&&e.shiftKey&&e.key==="A"){
+  if(e.ctrlKey && e.shiftKey && e.key==="A"){
     admin.style.display="block";
   }
 });
